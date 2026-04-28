@@ -3,7 +3,7 @@
 > **"Every network has a firewall. FairWall is the missing fairness layer for AI."**
 
 [![Live API](https://img.shields.io/badge/API-Live%20on%20Cloud%20Run-brightgreen)](https://fairwall-api-478571416937.us-central1.run.app/health)
-[![GitHub](https://img.shields.io/badge/GitHub-Fair--Wall-blue)](https://github.com/ShriHarsan64K/Fair-Wall)
+[![GitHub](https://img.shields.io/badge/GitHub-Fair--Wall-blue)](https://github.com/maddy0001/FairWall_Solution_Challenge_2026)
 [![Challenge](https://img.shields.io/badge/Challenge-Unbiased%20AI%20Decision-orange)](https://hack2skill.com)
 
 **Challenge:** [Unbiased AI Decision] — Build with AI, Solution Challenge 2026 (hack2skill / Google)  
@@ -230,4 +230,4 @@ Fair-Wall/
 
 
 *Built for Google Solution Challenge 2026 — [Unbiased AI Decision] track*  
-*FairWall v1.2 — All 6 segments complete — Cloud Run deployed*
+*FairWall v1.2*
