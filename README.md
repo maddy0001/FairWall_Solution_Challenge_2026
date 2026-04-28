@@ -227,17 +227,7 @@ Fair-Wall/
 
 ---
 
-## Demo Script
 
-See [`demo/DEMO_SCRIPT.md`](demo/DEMO_SCRIPT.md) for the verbatim 3-minute judge demo script.
-
----
-
-## Deployment
-
-See [`DEPLOY.md`](DEPLOY.md) for full Cloud Run + Firebase deployment guide.
-
----
 
 *Built for Google Solution Challenge 2026 — [Unbiased AI Decision] track*  
 *FairWall v1.2 — All 6 segments complete — Cloud Run deployed*
