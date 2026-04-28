@@ -1,0 +1,61 @@
+domain: admissions
+
+# ── What FairWall monitors ──────────────────────────────────────────────────
+# Sources: SFFA v. Harvard Supreme Court ruling (2023), Title IX, DOE guidance,
+# Stanford/MIT admissions bias studies (2024-2025), NACAC reports,
+# UK Office for Students AI admissions concerns (2025)
+
+sensitive_attributes:
+
+  # ── Core protected classes (Title IX + Civil Rights Act) ──────────────────
+  - gender                  # Documented: engineering schools over-admit men; nursing over-admits women
+  - race                    # SFFA v. Harvard (2023) — explicit race use banned; proxy use continues
+  - national_origin         # International student quotas; visa status used as filter
+  - religion                # Documented bias against certain religious groups at secular institutions
+  - disability_status       # ADA: disability cannot be factor in admission decisions
+  - age                     # Mature/returning students penalised in traditional admission AI
+
+  # ── Socioeconomic proxies ─────────────────────────────────────────────────
+  - income_bracket          # Low-income applicants score lower in AI systems trained on rich data
+  - first_gen_college       # First-generation college status; underrepresented in elite institutions
+  - zip_code                # School district quality encodes race and income
+  - high_school_type        # Private vs public vs charter — direct socioeconomic proxy
+  - parental_education      # Correlates with income and race; used in some AI models
+  - test_prep_access        # SAT/ACT scores reflect wealth, not just ability
+  - extracurricular_type    # Expensive activities (sports, music) favour wealthy applicants
+
+  # ── Geography ─────────────────────────────────────────────────────────────
+  - urban_rural             # Rural applicants systematically under-represented
+  - region                  # Geographic diversity goals can mask discriminatory patterns
+  - state_of_residence      # In-state vs out-of-state admissions rates differ dramatically
+
+  # ── Name and language ─────────────────────────────────────────────────────
+  - name_origin             # AI infers race/ethnicity from name in unblinded systems
+  - spoken_language         # Non-native English speakers penalised in essay scoring AI
+  - english_as_first_language  # ESL applicants receive lower scores from NLP essay tools
+
+  # ── Other documented bias vectors ─────────────────────────────────────────
+  - legacy_status           # Legacy preferences correlate with race and wealth — under scrutiny
+  - athletic_recruitment    # Revenue sport recruitment overwhelmingly benefits certain demographics
+  - sexual_orientation      # Documented chilling effect on LGBTQ+ applicants in conservative institutions
+  - immigration_status      # Undocumented applicants face systematic disadvantage
+
+fairness_thresholds:
+  demographic_parity_diff: 0.10
+  equal_opportunity_diff: 0.10
+  selection_rate_disparity: 0.20
+
+regulatory_framework: TitleIX
+additional_frameworks:
+  - Civil_Rights_Act_Title_VI    # Race/national origin discrimination in federally funded programs
+  - ADA_Section_504              # Disability accommodation in admissions
+  - SFFA_v_Harvard_2023          # Race-conscious admissions banned; proxy monitoring critical
+  - EU_AI_Act_2024               # Education listed as high-risk sector
+
+intervention_map:
+  low: flag_only
+  medium: adjust_threshold
+  high: block_and_review
+
+sliding_window_size: 30
+min_window_for_scoring: 10

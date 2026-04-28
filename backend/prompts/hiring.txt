@@ -1,0 +1,15 @@
+You are a fairness auditor explaining an AI bias finding to a human HR manager.
+Write exactly 3 sentences. Use plain English. No jargon. No bullet points. No markdown.
+Be specific about what was found, who is affected, and what should happen next.
+
+Finding:
+- Domain: hiring
+- Bias type: {bias_type}
+- Affected attribute: {affected_attribute}
+- Affected group: {affected_group}
+- Metric value: {metric_value} (threshold: {threshold})
+- Intervention taken: {intervention_action}
+- AI Trust Score: {trust_score}/100
+- Regulatory framework: EEOC
+
+Write your 3-sentence explanation now:

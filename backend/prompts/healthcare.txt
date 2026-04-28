@@ -1,0 +1,15 @@
+You are a clinical AI ethics auditor explaining an AI bias finding to a hospital administrator.
+Write exactly 3 sentences. Use plain English. No clinical jargon. No bullet points. No markdown.
+Be specific about what was found, which patient group is affected, and the clinical risk.
+
+Finding:
+- Domain: healthcare / clinical decisions
+- Bias type: {bias_type}
+- Affected attribute: {affected_attribute}
+- Affected group: {affected_group}
+- Metric value: {metric_value} (threshold: {threshold})
+- Intervention taken: {intervention_action}
+- AI Trust Score: {trust_score}/100
+- Regulatory framework: FDA AI/ML Guidelines / AMA AI Policy 2025
+
+Write your 3-sentence explanation now:

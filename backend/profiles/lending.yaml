@@ -1,0 +1,63 @@
+domain: lending
+
+# ── What FairWall monitors ──────────────────────────────────────────────────
+# Sources: CFPB enforcement actions 2024-2025, ECOA, Fair Housing Act,
+# DOJ redlining settlements, ProPublica COMPAS study, CFPB AI guidance 2024,
+# JPMorgan Chase redlining settlement (2024), Upstart Network FTC review (2023)
+
+sensitive_attributes:
+
+  # ── Core protected classes (ECOA + Fair Housing Act) ──────────────────────
+  - race                    # #1 documented bias in lending — Black applicants denied at 2x rate
+  - national_origin         # Documented in mortgage lending (DOJ settlement 2024)
+  - gender                  # Women denied mortgages at higher rates despite equal income
+  - religion                # ECOA protected; inferred from name or community
+  - marital_status          # ECOA explicitly prohibits discrimination on marital status
+  - age                     # ECOA protects people 40+ from credit age discrimination
+  - disability_status       # Income from disability benefits must be counted equally
+
+  # ── Geographic proxies (redlining) ────────────────────────────────────────
+  - zip_code                # Primary redlining proxy — CFPB enforcement priority 2024
+  - neighborhood_majority_race  # AI learns neighbourhood demographics from zip/census data
+  - urban_rural             # Rural communities face systematic credit denial
+  - census_tract            # Direct redlining signal; used in several 2024 DOJ cases
+
+  # ── Socioeconomic proxies ─────────────────────────────────────────────────
+  - income_source           # Disability/benefits income unfairly penalised by AI models
+  - income_bracket          # Correlates with race; used as discriminatory filter
+  - employment_type         # Gig/contract workers penalised — disproportionately minorities
+  - bank_branch_access      # Unbanked/underbanked populations correlate with race
+  - education_level         # Used as creditworthiness proxy; encodes race and class
+
+  # ── Name-based inference ──────────────────────────────────────────────────
+  - name_origin             # AI models infer race from applicant name — documented in lending
+  - gender_coded_name       # Female names associated with higher denial rates
+
+  # ── Language / digital access ─────────────────────────────────────────────
+  - spoken_language         # Non-English speakers face algorithmic disadvantage
+  - digital_literacy        # Online-only lending platforms penalise low digital access groups
+
+  # ── Other documented bias vectors ─────────────────────────────────────────
+  - immigration_status      # Non-citizens denied despite legal income and credit history
+  - public_benefits_recipient  # ECOA: benefit income must be evaluated equally
+  - single_parent_status    # Encodes gender + income vulnerability
+
+fairness_thresholds:
+  demographic_parity_diff: 0.08     # Stricter than hiring — financial harm is direct and severe
+  equal_opportunity_diff: 0.08
+  selection_rate_disparity: 0.15
+
+regulatory_framework: ECOA
+additional_frameworks:
+  - Fair_Housing_Act        # Prohibits discriminatory mortgage/housing lending
+  - CFPB_AI_Guidance_2024   # CFPB: existing fair lending laws apply to AI models
+  - DOJ_Redlining_Initiative  # Active enforcement since 2021; 30+ settlements
+  - EU_AI_Act_2024          # High-risk category for credit scoring AI
+
+intervention_map:
+  low: flag_only
+  medium: adjust_threshold
+  high: block_and_review
+
+sliding_window_size: 30
+min_window_for_scoring: 10

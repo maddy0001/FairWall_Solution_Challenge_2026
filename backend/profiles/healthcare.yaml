@@ -1,0 +1,79 @@
+domain: healthcare
+
+# ── What FairWall monitors ──────────────────────────────────────────────────
+# Sources: Obermeyer et al. (2019) — landmark study on healthcare AI racial bias,
+# FDA AI/ML guidance (2024), AMA AI policy (2025), BMJ AI bias review (2025-2026),
+# PMC algorithmic bias in healthcare study (Nov 2025), Sampath et al. multimodal study (2025)
+# Key documented cases:
+#   - Obermeyer 2019: algorithm used cost as proxy for need → Black patients 34% sicker than
+#     white patients at same risk score → massively underpredicted Black patient needs
+#   - Dermatology AI: trained on 80%+ light-skinned patients → 34% worse on dark skin
+#   - Sepsis prediction: lower accuracy for women and ethnic minorities
+#   - Pain management AI: systematic underprescription for Black patients
+
+sensitive_attributes:
+
+  # ── Core protected classes ─────────────────────────────────────────────────
+  - race                    # #1 bias source: cost-as-proxy, diagnostic accuracy gaps, pain treatment
+  - ethnicity               # Distinct from race in clinical contexts; affects diagnostic algorithms
+  - gender                  # Women's symptoms historically underrepresented in training data
+  - age                     # Elder patients and paediatric patients both have data gaps
+  - disability_status       # AI trained on non-disabled population performs worse for disabled patients
+  - national_origin         # Language barriers + cultural factors affect data quality
+
+  # ── Skin and physical characteristics ─────────────────────────────────────
+  - skin_tone               # Dermatology AI: up to 34% accuracy drop on darker skin (documented)
+  - body_mass_index         # BMI used as health proxy; encodes race and socioeconomic status
+  - biological_sex          # Clinical trials historically enrolled 75%+ male participants → sex bias
+
+  # ── Socioeconomic proxies ─────────────────────────────────────────────────
+  - insurance_type          # Insurance tier correlates with race and income; affects care quality
+  - healthcare_cost_history # Obermeyer 2019: cost used as proxy for need — discriminates against Black patients
+  - income_bracket          # Lower income → less prior care → lower risk scores → less referral
+  - zip_code                # Healthcare desert proxy; rural/urban and race-correlated
+  - employment_status       # Uninsured patients receive different AI-driven care recommendations
+
+  # ── Language and communication ─────────────────────────────────────────────
+  - spoken_language         # Non-English speakers receive lower quality AI-assisted diagnoses
+  - health_literacy         # AI trained on articulate patients performs worse on low-literacy patients
+  - digital_access          # Telehealth AI disadvantages low digital access populations
+
+  # ── Clinical data quality proxies ─────────────────────────────────────────
+  - prior_care_access       # Less prior care = less data = worse AI predictions (systematic for minorities)
+  - hospital_type           # Rural/community hospitals vs academic medical centres — data quality gap
+  - diagnosis_history_completeness  # Incomplete records disproportionate in marginalised groups
+
+  # ── Other documented bias vectors ─────────────────────────────────────────
+  - sexual_orientation      # LGBTQ+ patients face systematic documentation bias in EHRs
+  - pregnancy_status        # Pregnant patients excluded from many clinical AI training sets
+  - veteran_status          # Veterans have unique health profiles underrepresented in general datasets
+  - refugee_status          # Refugee populations have gaps in medical history = worse AI outcomes
+  - incarceration_history   # Formerly incarcerated patients face bias in pain management AI
+
+fairness_thresholds:
+  demographic_parity_diff: 0.08     # Stricter — healthcare decisions are life-critical
+  equal_opportunity_diff: 0.08
+  selection_rate_disparity: 0.15
+
+regulatory_framework: FDA_AI_Guidelines
+additional_frameworks:
+  - AMA_AI_Policy_2025          # AMA: AI must be validated across demographic subgroups
+  - EU_AI_Act_2024              # Healthcare = highest-risk category; mandatory audit
+  - HIPAA                       # Data privacy; constrains what sensitive attrs can be stored
+  - Civil_Rights_Act_Title_VI   # Non-discrimination in federally funded healthcare
+  - ADA_Title_III               # Disability non-discrimination
+
+intervention_map:
+  low: flag_only
+  medium: flag_only            # Healthcare: even medium severity goes to human review, not auto-adjust
+  high: block_and_review
+
+sliding_window_size: 30
+min_window_for_scoring: 10
+
+notes: >
+  Healthcare interventions are conservative by design.
+  Even MEDIUM severity triggers a flag (not threshold adjustment)
+  because automatic threshold adjustment in clinical AI is unsafe
+  without domain expert review. HIGH severity always blocks + routes
+  to a clinician for manual review before the decision is finalised.

@@ -1,0 +1,69 @@
+domain: hiring
+
+# ── What FairWall monitors ──────────────────────────────────────────────────
+# List any attribute your AI model receives that could carry demographic bias.
+# FairWall skips attributes not present in the incoming prediction payload,
+# so listing extras here costs nothing — only present attributes are scored.
+#
+# Sources: EEOC, Workday v. Mobley class action (2025), EU AI Act (2024),
+# Brookings resume bias study (Aug 2025), Stanford LLM hiring study (Oct 2025),
+# California AB5 AI regs (2025), Colorado AI Act (2026), UN Women AI report (2025)
+
+sensitive_attributes:
+
+  # ── Core protected classes ─────────────────────────────────────────────────
+  - gender                  # Most documented bias: women rejected at 2x rate in tech (Amazon, 2018+)
+  - race                    # Name-based race signals — Black candidates rated lower (Brookings 2025)
+  - age                     # Workday class action: 40+ age group screened out (ADEA protected)
+  - ethnicity               # Distinct from race in EU/Indian frameworks
+  - religion                # Title VII protected; can appear via name or listed affiliation
+  - national_origin         # Visa status used as proxy; documented in US + EU hiring
+  - disability_status       # Mobley v. Workday (2025): AI screened out disabled applicants
+  - pregnancy_status        # AI penalises employment gaps caused by maternity leave
+
+  # ── Socioeconomic proxies ─────────────────────────────────────────────────
+  - zip_code                # Redlining proxy: correlates with race and income (CFPB 2024)
+  - university_tier         # Elite vs state school encodes class + race indirectly
+  - income_bracket          # Used as hiring filter; correlates with race
+  - employment_gap_months   # Disproportionately harms women, caregivers, people with illness
+  - first_gen_college       # First-generation college student = socioeconomic marker
+  - school_type             # Private vs public; encodes socioeconomic background
+
+  # ── Name-based inference ──────────────────────────────────────────────────
+  - name_origin             # AI infers race/ethnicity/national origin from name (documented 2025)
+  - gender_coded_name       # Female-coded names score lower in automated resume tools
+
+  # ── Geography and language ────────────────────────────────────────────────
+  - spoken_language         # Accent bias in AI video/voice interview screening tools
+  - urban_rural             # Rural candidates penalised in remote role screening
+  - region                  # Geographic discrimination, especially in global hiring
+
+  # ── Appearance (AI image/video tools) ────────────────────────────────────
+  - skin_tone               # AI facial tools have documented higher error rates on dark skin
+  - hairstyle_type          # Natural Black hairstyles scored lower in AI image assessments (Aug 2025)
+
+  # ── Other documented bias vectors ────────────────────────────────────────
+  - sexual_orientation      # Protected in many jurisdictions; inferred from language/profile
+  - marital_status          # Used as proxy for stability/commitment; harms women more
+  - caregiver_status        # AI penalises gaps and part-time work linked to caregiving
+  - military_veteran         # Can trigger bias both ways; protected under VEVRAA (US)
+
+fairness_thresholds:
+  demographic_parity_diff: 0.10     # EEOC 80% rule equivalent — legal benchmark
+  equal_opportunity_diff: 0.10      # Qualified candidates of all groups treated equally
+  selection_rate_disparity: 0.20    # No group selected at less than 80% rate of top group
+
+regulatory_framework: EEOC
+additional_frameworks:
+  - EU_AI_Act_2024                  # High-risk system — mandatory bias audit required
+  - NYC_Local_Law_144_2023          # Annual bias audit + public reporting (already in effect)
+  - California_AB5_AI_Regs_2025     # Anti-discrimination laws extended to AI tools
+  - Colorado_AI_Act_2026            # Developer liability for algorithmic discrimination
+
+intervention_map:
+  low: flag_only
+  medium: adjust_threshold
+  high: block_and_review
+
+sliding_window_size: 30
+min_window_for_scoring: 10

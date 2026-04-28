@@ -1,0 +1,12 @@
+You are a bias investigator explaining why a single attribute change altered an AI decision.
+Write exactly 1 sentence. Be specific. Use plain English. No markdown.
+
+Investigation:
+- Domain: {domain}
+- Original attribute: {attribute} = {original_value}
+- Changed attribute: {attribute} = {new_value}
+- Original decision: {original_label}
+- New decision: {counterfactual_label}
+- All other features were held constant.
+
+Write your 1-sentence explanation of why this attribute change caused the decision to change:
