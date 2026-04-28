@@ -1,0 +1,200 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: hsl(0 0% 3.1%);
+  --foreground: hsl(0 0% 96.1%);
+  --card: hsl(0 0% 5.9%);
+  --card-foreground: hsl(0 0% 96.1%);
+  --popover: hsl(0 0% 5.9%);
+  --popover-foreground: hsl(0 0% 96.1%);
+  --primary: hsl(30 100% 50%);
+  --primary-foreground: hsl(0 0% 3.1%);
+  --secondary: hsl(0 0% 10%);
+  --secondary-foreground: hsl(0 0% 96.1%);
+  --muted: hsl(0 0% 10%);
+  --muted-foreground: hsl(0 0% 60%);
+  --accent: hsl(186 100% 45%);
+  --accent-foreground: hsl(0 0% 3.1%);
+  --destructive: hsl(348 100% 55%);
+  --destructive-foreground: hsl(0 0% 96.1%);
+  --border: hsla(30, 100%, 50%, 0.12);
+  --input: hsla(0, 0%, 100%, 0.06);
+  --ring: hsl(30 100% 50%);
+  --chart-1: hsl(30 100% 50%);
+  --chart-2: hsl(145 100% 45%);
+  --chart-3: hsl(54 100% 50%);
+  --chart-4: hsl(348 100% 55%);
+  --chart-5: hsl(186 100% 45%);
+  --sidebar: hsl(0 0% 5.9%);
+  --sidebar-foreground: hsl(0 0% 96.1%);
+  --sidebar-primary: hsl(30 100% 50%);
+  --sidebar-primary-foreground: hsl(0 0% 3.1%);
+  --sidebar-accent: hsl(0 0% 10%);
+  --sidebar-accent-foreground: hsl(0 0% 96.1%);
+  --sidebar-border: hsla(30, 100%, 50%, 0.10);
+  --sidebar-ring: hsl(30 100% 50%);
+
+  /* VOID EMBER tokens */
+  --amber: #FF8C00;
+  --amber-bright: #FFB347;
+  --amber-dim: rgba(255, 140, 0, 0.20);
+  --cyan: #00D9E8;
+  --cyan-dim: rgba(0, 217, 232, 0.15);
+  --healthy: #00E676;
+  --warning: #FFD600;
+  --critical: #FF1744;
+  --text-primary: #F5F5F5;
+  --text-secondary: rgba(245,245,245,0.55);
+  --text-dim: rgba(245,245,245,0.30);
+  --text-amber: #FFB347;
+  --border-card: rgba(255, 140, 0, 0.14);
+  --border-hover: rgba(255, 140, 0, 0.35);
+  --border-cyan: rgba(0, 217, 232, 0.20);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: #080808;
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Void Ember background */
+.void-bg {
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 90%, rgba(255, 80, 0, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(0, 180, 200, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(255, 140, 0, 0.03) 0%, transparent 70%),
+    #080808;
+}
+
+/* Ember card */
+.ember-card {
+  background: rgba(255, 140, 0, 0.03);
+  border: 1px solid rgba(255, 140, 0, 0.12);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 4px 24px rgba(0,0,0,0.6);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+.ember-card:hover {
+  border-color: rgba(255, 140, 0, 0.28);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 4px 24px rgba(0,0,0,0.6),
+    0 0 32px rgba(255,140,0,0.08);
+  transform: translateY(-1px);
+}
+
+/* Custom scrollbar — amber */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 140, 0, 0.25);
+  border-radius: 99px;
+}
+
+/* Status badges */
+.badge-pass {
+  background: rgba(0, 230, 118, 0.10);
+  border: 1px solid rgba(0, 230, 118, 0.35);
+  color: #00E676;
+}
+.badge-warn {
+  background: rgba(255, 214, 0, 0.10);
+  border: 1px solid rgba(255, 214, 0, 0.35);
+  color: #FFD600;
+}
+.badge-fail {
+  background: rgba(255, 23, 68, 0.12);
+  border: 1px solid rgba(255, 23, 68, 0.45);
+  color: #FF1744;
+  animation: fail-border-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes fail-border-pulse {
+  0%, 100% { border-color: rgba(255, 23, 68, 0.45); }
+  50% { border-color: rgba(255, 23, 68, 0.90); }
+}
+
+@keyframes critical-ring-pulse {
+  0% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0; transform: scale(1.05); }
+  100% { opacity: 0.4; transform: scale(1); }
+}
+
+/* Block flash — red */
+@keyframes block-flash {
+  0% { background-color: rgba(255, 23, 68, 0.12); }
+  100% { background-color: transparent; }
+}
+
+.block-flash-in {
+  animation: block-flash 2s ease-out forwards;
+}
+
+/* Warming dots */
+@keyframes warming-dot {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
